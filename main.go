@@ -9,7 +9,6 @@ import (
 
 	"github.com/eroluysal/eggrpc/proto"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 type server struct{}
@@ -20,7 +19,7 @@ func (s *server) Add(ctx context.Context, request *proto.StatRequest) (*proto.St
 	v := &proto.StatResponse{
 		Pid:     pid,
 		Status:  raw,
-		Message: fmt.Sprintf("its working on %d - %t", id, raw),
+		Message: fmt.Sprintf("pid: %d, id: %d, message: %t", pid, id, raw),
 	}
 
 	return v, nil
@@ -34,7 +33,7 @@ func main() {
 
 	srv := grpc.NewServer()
 	proto.RegisterStatServiceServer(srv, &server{})
-	reflection.Register(srv)
+	//reflection.Register(srv)
 
 	v := make(chan os.Signal)
 	signal.Notify(v, os.Kill, os.Interrupt)

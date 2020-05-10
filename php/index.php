@@ -11,6 +11,9 @@ $cl = new StatServiceClient(':4040', [
 ]);
 
 $req = new StatRequest();
+$req->setId(rand(1, 1000));
+$req->setPid(getmypid());
+$req->setRaw("example proto message");
 $resp = $cl->add($req)->wait();
 
 list($resp, $status) = $resp;
