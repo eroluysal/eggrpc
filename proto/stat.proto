@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = ".;proto";
+
+// Php specific options
+option php_generic_services = true;
+option php_metadata_namespace = "Proto\\GPBMetadata";
+option php_namespace = "Proto";
+
+message StatRequest {
+  uint32 id = 1;
+  uint32 pid = 2;
+  bool raw = 3;
+}
+
+message StatResponse {
+  uint32 pid = 1;
+  bool status = 2;
+  string message = 3;
+}
+
+service StatService {
+  rpc Add(StatRequest) returns (StatResponse);
+}
