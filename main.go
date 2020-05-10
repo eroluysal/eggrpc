@@ -40,7 +40,7 @@ func main() {
 	go func() {
 		<-v
 		fmt.Println("goodbye. server closing...")
-		os.Exit(1)
+		os.Exit(0)
 	}()
 
 	if err := srv.Serve(l); err != nil {
