@@ -2,11 +2,12 @@
 
 require __DIR__.'/vendor/autoload.php';
 
+use Grpc\ChannelCredentials;
 use Proto\StatRequest;
 use Proto\StatServiceClient;
 
 $cl = new StatServiceClient(':4040', [
-    'credentials'=> \Grpc\ChannelCredentials::createInsecure(),
+    'credentials'=> ChannelCredentials::createInsecure(),
 ]);
 
 $req = new StatRequest();
@@ -16,6 +17,7 @@ list($resp, $status) = $resp;
 if (null === $resp) {
     throw new \RuntimeException('The response could not be retrieved.');
 }
+
 var_dump($resp->getPid());
 var_dump($resp->getStatus());
 var_dump($resp->getMessage());
