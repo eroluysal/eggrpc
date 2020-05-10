@@ -19,7 +19,7 @@ func (s *server) Add(ctx context.Context, request *proto.StatRequest) (*proto.St
 	v := &proto.StatResponse{
 		Pid:     pid,
 		Status:  raw,
-		Message: fmt.Sprintf("pid: %d, id: %d, message: %t", pid, id, raw),
+		Message: fmt.Sprintf("pid: %d, id: %d, raw: %t", pid, id, raw),
 	}
 
 	return v, nil
