@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"net"
+    "os"
+    "os/signal"
 
-	"github.com/eroluysal/eggrpc/proto"
+    "github.com/eroluysal/eggrpc/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -33,6 +35,14 @@ func main() {
 	srv := grpc.NewServer()
 	proto.RegisterStatServiceServer(srv, &server{})
 	reflection.Register(srv)
+
+	v := make(chan os.Signal)
+	signal.Notify(v, os.Kill, os.Interrupt)
+	go func(){
+	    <-v
+	    fmt.Println("goodbye. server closing...")
+	    os.Exit(1)
+    }()
 
 	if err := srv.Serve(l); err != nil {
 		panic(err)
